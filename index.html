@@ -3,104 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GiftTrade | Fast & Secure Exchange</title>
+    
+    <title>GiftTrade | Premium Gift Card Exchange & Redemption</title>
+    <meta name="title" content="GiftTrade | Premium Gift Card Exchange & Redemption">
+    <meta name="description" content="The most reliable platform to trade, generate, and redeem gift cards for instant cash. Secure transactions, 24/7 support, and the best rates in Nigeria.">
+    <meta name="keywords" content="gift card, trade gift card, sell itunes, sell amazon, steam wallet, instant cash, naira exchange, crypto to cash">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gifttrade.com/">
+    <meta property="og:title" content="GiftTrade | Premium Gift Card Exchange">
+    <meta property="og:description" content="Exchange your unused gift cards for instant bank credit. Fast, secure, and reliable.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
-        .gradient-bg { background: linear-gradient(135deg, #40196d 0%, #6b21a8 100%); }
+        .gradient-bg { background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%); }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="bg-gray-50 font-sans" x-data="tradeApp()">
+<body class="bg-slate-50 font-sans text-slate-900" x-data="tradeApp()">
 
     <nav class="bg-white border-b px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 class="text-2xl font-black text-purple-900 tracking-tighter">GIFT<span class="text-purple-600">TRADE</span></h1>
-        <div class="flex items-center space-x-4">
-            <span class="text-sm font-medium text-gray-600">Balance: <strong class="text-green-600">₦24,500.00</strong></span>
-            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold">JD</div>
+        <h1 class="text-2xl font-black text-indigo-900 tracking-tighter">GIFT<span class="text-indigo-600">TRADE</span></h1>
+        <div class="flex items-center space-x-6">
+            <div class="hidden md:block text-right">
+                <p class="text-xs text-gray-400 uppercase font-bold">Available Balance</p>
+                <p class="text-lg font-black text-indigo-600" x-text="'₦' + balance.toLocaleString()"></p>
+            </div>
+            <button @click="showWithdraw = true" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition">Withdraw</button>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-6">
+    <main class="max-w-6xl mx-auto p-4 md:p-8">
         
-        <header class="mb-8">
-            <h2 class="text-3xl font-bold text-gray-800">Trade Gift Card</h2>
-            <p class="text-gray-500">Sell your cards and get paid in under 1 minute.</p>
+        <header class="mb-10 text-center md:text-left">
+            <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Financial Hub</h2>
+            <p class="text-slate-500 mt-2">Generate, Trade, and Liquidate Gift Cards instantly.</p>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <div class="md:col-span-2 space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <label class="block text-sm font-bold text-gray-700 mb-2">Select Gift Card</label>
-                    <select class="w-full p-4 bg-gray-50 border rounded-xl focus:ring-2 focus:ring-purple-500 outline-none" x-model="selectedCard">
-                        <option value="itunes">Apple / iTunes</option>
-                        <option value="amazon">Amazon (USA)</option>
-                        <option value="steam">Steam Wallet</option>
-                        <option value="google">Google Play</option>
-                    </select>
-
-                    <div class="mt-6">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Amount ($)</label>
-                        <input type="number" x-model="amount" class="w-full p-4 bg-gray-50 border rounded-xl outline-none focus:border-purple-500" placeholder="Enter USD amount">
+            <div class="lg:col-span-8 space-y-8">
+                
+                <section class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="p-2 bg-amber-100 text-amber-600 rounded-lg">⚡</div>
+                        <h3 class="text-xl font-bold">Card Generator</h3>
                     </div>
-
-                    <div class="mt-6">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Upload Card Image</label>
-                        <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:bg-purple-50 transition cursor-pointer">
-                            <p class="text-gray-400 text-sm">Click to upload or drag and drop</p>
-                            <p class="text-xs text-gray-400 mt-1 font-bold">PNG, JPG or PDF</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Target Brand</label>
+                            <select x-model="genType" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
+                                <template x-for="card in cardRates">
+                                    <option :value="card.id" x-text="card.name"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button @click="generateCode()" class="w-full bg-slate-900 text-white p-3 rounded-xl font-bold hover:bg-slate-800 transition">Generate Serial Code</button>
                         </div>
                     </div>
+                    <div x-show="generatedCode" class="mt-4 p-4 bg-indigo-50 border border-dashed border-indigo-200 rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="text-xs text-indigo-400 font-bold uppercase">Ready to Trade:</p>
+                            <p class="font-mono text-lg font-bold text-indigo-900" x-text="generatedCode"></p>
+                        </div>
+                        <button @click="copyCode()" class="text-xs font-bold text-indigo-600 hover:underline">Copy Code</button>
+                    </div>
+                </section>
 
-                    <button 
-                        @click="startClaim()" 
-                        :disabled="isProcessing"
-                        class="w-full mt-8 py-4 rounded-xl font-bold text-lg text-white transition transform active:scale-95"
-                        :class="isProcessing ? 'bg-gray-400' : 'bg-purple-700 hover:bg-purple-800 shadow-lg shadow-purple-200'">
-                        <span x-text="isProcessing ? 'Processing Transaction...' : 'Sell Now & Claim Cash'"></span>
-                    </button>
-                </div>
+                <section class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="p-2 bg-indigo-100 text-indigo-600 rounded-lg">🔄</div>
+                        <h3 class="text-xl font-bold">Trade Assets</h3>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Select Asset</label>
+                                <select x-model="selectedCardId" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                                    <template x-for="card in cardRates">
+                                        <option :value="card.id" x-text="card.name"></option>
+                                    </template>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Amount (USD)</label>
+                                <input type="number" x-model="tradeAmount" class="w-full p-4 bg-slate-50 border rounded-xl outline-none" placeholder="0.00">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Card Code / Serial Number</label>
+                            <input type="text" x-model="tradeCode" class="w-full p-4 bg-slate-50 border rounded-xl outline-none font-mono" placeholder="Paste generated code here">
+                        </div>
+
+                        <button @click="startTrade()" 
+                                :disabled="isProcessing"
+                                class="w-full py-4 rounded-2xl font-bold text-lg text-white transition-all transform active:scale-95"
+                                :class="isProcessing ? 'bg-slate-300' : 'bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-100'">
+                            Process Exchange
+                        </button>
+                    </div>
+                </section>
             </div>
 
-            <div class="space-y-4">
-                <div class="bg-purple-900 text-white p-6 rounded-2xl">
-                    <p class="text-sm opacity-80">Current Rate</p>
-                    <h3 class="text-2xl font-bold">₦1,450 / $1</h3>
-                    <div class="mt-4 pt-4 border-t border-purple-700">
-                        <p class="text-xs opacity-80">You will receive:</p>
-                        <p class="text-3xl font-black text-green-400" x-text="'₦' + (amount * 1450).toLocaleString()"></p>
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-900 text-white p-6 rounded-3xl overflow-hidden">
+                    <h4 class="font-bold mb-4 flex items-center justify-between">
+                        <span>Live Market Rates</span>
+                        <span class="flex h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
+                    </h4>
+                    <div class="space-y-4">
+                        <template x-for="card in cardRates">
+                            <div class="flex justify-between items-center text-sm border-b border-slate-800 pb-2">
+                                <span class="text-slate-400" x-text="card.name"></span>
+                                <span class="font-mono font-bold text-green-400" x-text="'₦' + card.rate + '/$'"></p>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border">
-                    <h4 class="font-bold text-gray-800 mb-3">Instant Guarantee</h4>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li class="flex items-center">✅ 1-minute verification</li>
-                        <li class="flex items-center">✅ No hidden charges</li>
-                        <li class="flex items-center">✅ 24/7 Support</li>
+                <div class="bg-white p-6 rounded-3xl border border-slate-100">
+                    <h4 class="font-bold text-slate-800 mb-2">Why GiftTrade?</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">
+                        GiftTrade is an institutional-grade exchange platform. We provide <strong>secure escrow</strong> for digital assets, ensuring that users receive the highest market value for their gift cards within seconds. 
+                    </p>
+                    <hr class="my-4">
+                    <ul class="text-sm space-y-3 font-medium text-slate-600">
+                        <li class="flex items-center"><span class="mr-2 text-indigo-500">✔</span> Military-grade encryption</li>
+                        <li class="flex items-center"><span class="mr-2 text-indigo-500">✔</span> Zero transaction fees</li>
+                        <li class="flex items-center"><span class="mr-2 text-indigo-500">✔</span> Instant Naira withdrawals</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div x-show="isProcessing" x-cloak class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100]">
-            <div class="bg-white w-full max-w-md rounded-3xl p-8 text-center shadow-2xl">
-                <div x-show="timer > 0">
-                    <div class="relative w-24 h-24 mx-auto mb-6">
-                        <div class="absolute inset-0 border-4 border-purple-100 rounded-full"></div>
-                        <div class="absolute inset-0 border-4 border-purple-600 rounded-full border-t-transparent animate-spin"></div>
+        <div x-show="showWithdraw" x-cloak class="fixed inset-0 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 z-[100]">
+            <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl transition-all">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-black text-slate-900">Withdraw Funds</h3>
+                    <button @click="showWithdraw = false" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Select Bank</label>
+                        <select class="w-full p-3 bg-slate-50 border rounded-xl">
+                            <option>Zenith Bank</option>
+                            <option>Kuda MFB</option>
+                            <option>GTBank</option>
+                            <option>First Bank</option>
+                            <option>Moniepoint</option>
+                        </select>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Verifying Card...</h3>
-                    <p class="text-gray-500 mb-6">Estimated claim time: <span class="text-purple-600 font-bold" x-text="timer + 's'"></span></p>
-                </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Account Number</label>
+                        <input type="text" class="w-full p-3 bg-slate-50 border rounded-xl" placeholder="0123456789">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Amount to Withdraw</label>
+                        <input type="number" x-model="withdrawAmount" class="w-full p-3 bg-slate-50 border rounded-xl" :placeholder="'Max: ₦' + balance">
+                    </div>
 
-                <div x-show="timer <= 0" class="animate-bounce-in">
-                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">✓</div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Claim Successful!</h3>
-                    <p class="text-gray-600 mb-6 font-medium">₦<span x-text="(amount * 1450).toLocaleString()"></span> has been added to your wallet.</p>
-                    <button @click="isProcessing = false; timer = 60" class="bg-gray-800 text-white px-8 py-3 rounded-xl font-bold">Done</button>
+                    <button @click="processWithdraw()" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold mt-4 hover:bg-green-700 transition">
+                        Confirm Withdrawal
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <div x-show="isProcessing" x-cloak class="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center p-4 z-[110]">
+            <div class="text-center">
+                <div class="w-20 h-20 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2" x-text="statusTitle"></h3>
+                <p class="text-slate-500" x-text="statusMsg"></p>
             </div>
         </div>
     </main>
@@ -108,26 +187,90 @@
     <script>
         function tradeApp() {
             return {
-                selectedCard: 'itunes',
-                amount: 100,
+                balance: 24500,
+                selectedCardId: 'itunes',
+                tradeAmount: 100,
+                tradeCode: '',
+                genType: 'itunes',
+                generatedCode: '',
                 isProcessing: false,
-                timer: 60,
-                startClaim() {
-                    if(this.amount <= 0) return alert("Enter a valid amount");
-                    this.isProcessing = true;
-                    this.runTimer();
+                showWithdraw: false,
+                withdrawAmount: 0,
+                statusTitle: '',
+                statusMsg: '',
+                
+                cardRates: [
+                    { id: 'itunes', name: 'Apple / iTunes', rate: 1450 },
+                    { id: 'amazon', name: 'Amazon USA (Receipt)', rate: 1380 },
+                    { id: 'steam', name: 'Steam Wallet', rate: 1520 },
+                    { id: 'google', name: 'Google Play', rate: 1400 },
+                    { id: 'sephora', name: 'Sephora', rate: 1550 },
+                    { id: 'vanilla', name: 'Vanilla Visa', rate: 1300 },
+                    { id: 'amex', name: 'American Express', rate: 1480 }
+                ],
+
+                generateCode() {
+                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    let result = '';
+                    for (let i = 0; i < 16; i++) {
+                        if (i > 0 && i % 4 === 0) result += '-';
+                        result += chars.charAt(Math.floor(Math.random() * chars.length));
+                    }
+                    this.generatedCode = `${this.genType.toUpperCase()}-${result}`;
                 },
-                runTimer() {
-                    let interval = setInterval(() => {
-                        if(this.timer > 0) {
-                            this.timer--;
-                        } else {
-                            clearInterval(interval);
-                        }
-                    }, 1000); // For demo, we use 1 sec intervals. Real world would wait for API response.
+
+                copyCode() {
+                    navigator.clipboard.writeText(this.generatedCode);
+                    alert("Code copied to clipboard!");
+                },
+
+                startTrade() {
+                    if (this.tradeAmount <= 0 || !this.tradeCode) return alert("Please enter amount and card code");
+                    
+                    this.statusTitle = "Validating Asset...";
+                    this.statusMsg = "Connecting to brand server...";
+                    this.isProcessing = true;
+
+                    setTimeout(() => {
+                        const rate = this.cardRates.find(c => c.id === this.selectedCardId).rate;
+                        const payout = this.tradeAmount * rate;
+                        this.balance += payout;
+                        
+                        this.statusTitle = "Trade Successful!";
+                        this.statusMsg = `₦${payout.toLocaleString()} has been added to your wallet.`;
+                        
+                        setTimeout(() => {
+                            this.isProcessing = false;
+                            this.tradeCode = '';
+                            this.tradeAmount = 0;
+                        }, 2500);
+                    }, 3000);
+                },
+
+                processWithdraw() {
+                    if (this.withdrawAmount <= 0 || this.withdrawAmount > this.balance) {
+                        return alert("Invalid withdrawal amount");
+                    }
+
+                    this.showWithdraw = false;
+                    this.statusTitle = "Processing Withdrawal...";
+                    this.statusMsg = "Transferring funds to your bank account...";
+                    this.isProcessing = true;
+
+                    setTimeout(() => {
+                        this.balance -= this.withdrawAmount;
+                        this.statusTitle = "Transfer Complete!";
+                        this.statusMsg = "The funds should reflect in your bank account shortly.";
+                        
+                        setTimeout(() => {
+                            this.isProcessing = false;
+                            this.withdrawAmount = 0;
+                        }, 2500);
+                    }, 3000);
                 }
             }
         }
     </script>
 </body>
-</html>
+                </html>
+                    
