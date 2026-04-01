@@ -4,220 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>GiftTrade | Premium Gift Card Exchange & Redemption Nigeria</title>
+    <title>GiftTrade | Exchange Gift Cards for Instant Cash in Nigeria</title>
     <meta name="title" content="GiftTrade | Premium Gift Card Exchange & Redemption">
-    <meta name="description" content="The most reliable platform to trade, generate, and redeem gift cards for instant cash in Nigeria. Secure transactions and best rates for iTunes, Steam, and Amazon.">
-    <meta name="keywords" content="gift card, trade gift card, sell itunes, sell amazon, steam wallet, instant cash, naira exchange, GiftTrade">
+    <meta name="description" content="The most reliable platform to trade, generate, and redeem gift cards for instant cash. Secure transactions, 24/7 support, and the best rates for iTunes, Amazon, and Steam in Nigeria.">
+    <meta name="keywords" content="gift card, trade gift card, sell itunes, sell amazon, steam wallet, instant cash, naira exchange, crypto to cash, GiftTrade Nigeria">
     <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="ADD_YOUR_CODE_HERE" />
-    
+    <meta name="google-site-verification" content="ADD_YOUR_VERIFICATION_CODE_HERE" />
+    <link rel="canonical" href="https://gifttrade.com/" />
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gifttrade.com/">
     <meta property="og:title" content="GiftTrade | Premium Gift Card Exchange">
     <meta property="og:description" content="Exchange your unused gift cards for instant bank credit. Fast, secure, and reliable.">
+    <meta property="og:image" content="https://gifttrade.com/og-image.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] { display: none !important; }
-        .nav-link { @apply flex items-center space-x-3 p-3 rounded-xl transition-all font-bold; }
-        .nav-active { @apply bg-indigo-600 text-white shadow-lg shadow-indigo-100; }
-        .nav-inactive { @apply text-slate-500 hover:bg-slate-100; }
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .gradient-bg { background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .nav-link { @apply flex items-center space-x-3 p-3 rounded-xl transition-all duration-200; }
+        .nav-link.active { @apply bg-indigo-600 text-white shadow-lg shadow-indigo-200; }
+        .nav-link.inactive { @apply text-slate-500 hover:bg-slate-100; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900" x-data="tradeApp()">
 
     <nav class="lg:hidden bg-white border-b px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 class="text-xl font-black text-indigo-900 tracking-tighter">GIFT<span class="text-indigo-600">TRADE</span></h1>
-        <button @click="mobileMenu = !mobileMenu" class="p-2 text-slate-600 text-2xl">☰</button>
+        <h1 class="text-xl font-black text-indigo-900">GIFT<span class="text-indigo-600">TRADE</span></h1>
+        <button @click="mobileMenu = !mobileMenu" class="p-2 text-slate-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+        </button>
     </nav>
 
     <div class="flex min-h-screen">
         <aside :class="mobileMenu ? 'translate-x-0' : '-translate-x-full'" class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r z-[60] transition-transform duration-300 lg:translate-x-0">
-            <div class="p-8 flex flex-col h-full">
+            <div class="p-8">
                 <h1 class="text-2xl font-black text-indigo-900 tracking-tighter mb-10 hidden lg:block">GIFT<span class="text-indigo-600">TRADE</span></h1>
                 
-                <nav class="space-y-2 flex-1">
-                    <button @click="currentPage = 'trade'; mobileMenu = false" :class="currentPage === 'trade' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full">
-                        <span>🏠</span> <span>Dashboard</span>
+                <nav class="space-y-2">
+                    <button @click="currentPage = 'trade'" :class="currentPage === 'trade' ? 'active' : 'inactive'" class="nav-link w-full">
+                        <span>🏠</span> <span class="font-bold">Trade Hub</span>
                     </button>
-                    <button @click="currentPage = 'about'; mobileMenu = false" :class="currentPage === 'about' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full">
-                        <span>📖</span> <span>About Us</span>
+                    <button @click="currentPage = 'about'" :class="currentPage === 'about' ? 'active' : 'inactive'" class="nav-link w-full">
+                        <span>📖</span> <span class="font-bold">About Us</span>
                     </button>
-                    <button @click="currentPage = 'terms'; mobileMenu = false" :class="currentPage === 'terms' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full">
-                        <span>⚖️</span> <span>Terms</span>
+                    <button @click="currentPage = 'terms'" :class="currentPage === 'terms' ? 'active' : 'inactive'" class="nav-link w-full">
+                        <span>⚖️</span> <span class="font-bold">Terms</span>
                     </button>
-                    <button @click="currentPage = 'privacy'; mobileMenu = false" :class="currentPage === 'privacy' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full">
-                        <span>🛡️</span> <span>Privacy</span>
+                    <button @click="currentPage = 'privacy'" :class="currentPage === 'privacy' ? 'active' : 'inactive'" class="nav-link w-full">
+                        <span>🛡️</span> <span class="font-bold">Privacy</span>
                     </button>
                 </nav>
 
                 <div class="mt-10 p-4 bg-slate-900 rounded-2xl text-white">
-                    <p class="text-[10px] text-slate-400 uppercase font-bold mb-1">Contact Support</p>
+                    <p class="text-xs text-slate-400 uppercase font-bold mb-1">Support Email</p>
                     <a href="mailto:waxlag94@instmall.uk" class="text-xs font-medium hover:text-indigo-400 break-all">waxlag94@instmall.uk</a>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 p-4 md:p-10 max-w-6xl mx-auto">
+        <main class="flex-1 max-w-6xl mx-auto p-4 md:p-10">
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-indigo-600 p-6 rounded-3xl text-white shadow-xl flex flex-col justify-between relative overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-indigo-600 p-6 rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
                     <div class="relative z-10">
                         <p class="text-indigo-100 text-sm font-medium">Available Balance</p>
-                        <h3 class="text-4xl font-black mt-1" x-text="'₦' + balance.toLocaleString()"></h3>
+                        <h3 class="text-3xl font-black mt-1" x-text="'₦' + balance.toLocaleString()"></h3>
                     </div>
-                    <button @click="showWithdraw = true" class="mt-4 bg-white/20 hover:bg-white/30 py-2 rounded-xl font-bold text-sm transition relative z-10">Withdraw Funds</button>
-                    <div class="absolute -right-4 -bottom-6 opacity-10 text-9xl font-black">₦</div>
+                    <div class="absolute -right-4 -bottom-4 opacity-10 text-8xl font-black">₦</div>
                 </div>
-
-                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-center">
-                    <p class="text-slate-400 text-sm font-medium uppercase tracking-wider">Total Success Trades</p>
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                    <p class="text-slate-400 text-sm font-medium">Total Trades</p>
                     <h3 class="text-3xl font-black text-slate-800 mt-1" x-text="tradeCount"></h3>
                 </div>
-
-                <div class="bg-slate-100 rounded-3xl border-2 border-dashed border-slate-200 flex items-center justify-center text-center p-4">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight">Advertisement<br>Space Available</p>
+                <div class="bg-slate-100 rounded-3xl flex items-center justify-center border-2 border-dashed border-slate-200">
+                    <span class="text-xs text-slate-400 font-bold uppercase tracking-widest">Advertisement</span>
                 </div>
             </div>
 
             <div x-show="currentPage === 'trade'" x-cloak>
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    
-                    <div class="lg:col-span-8 space-y-6">
-                        
+                    <div class="lg:col-span-8 space-y-8">
                         <section class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-bold flex items-center">
-                                    <span class="mr-2">⚡</span> Card Serial Generator
-                                </h3>
-                                <span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-black uppercase">Demo Tool</span>
+                            <div class="flex items-center space-x-3 mb-6">
+                                <div class="p-2 bg-amber-100 text-amber-600 rounded-lg">⚡</div>
+                                <h3 class="text-xl font-bold">Card Generator</h3>
                             </div>
-                            <div class="flex flex-col md:flex-row gap-4 items-end">
-                                <div class="flex-1 w-full">
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Target Brand</label>
-                                    <select x-model="selectedCardId" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Target Brand</label>
+                                    <select x-model="genType" class="w-full p-3 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
                                         <template x-for="card in cardRates">
                                             <option :value="card.id" x-text="card.name"></option>
                                         </template>
                                     </select>
                                 </div>
-                                <button @click="generateNewCode()" class="w-full md:w-auto px-8 py-4 bg-indigo-100 text-indigo-600 rounded-2xl font-bold hover:bg-indigo-200 transition">
-                                    Generate
-                                </button>
-                            </div>
-                            <div x-show="generatedCode" x-transition class="mt-4 p-4 bg-slate-900 rounded-2xl flex justify-between items-center border-2 border-indigo-500">
-                                <div>
-                                    <p class="text-[10px] text-indigo-300 font-bold uppercase">Ready to trade:</p>
-                                    <p class="text-white font-mono font-bold text-lg" x-text="generatedCode"></p>
+                                <div class="flex items-end">
+                                    <button @click="generateCode()" class="w-full bg-slate-900 text-white p-3 rounded-xl font-bold hover:bg-slate-800 transition">Generate Serial Code</button>
                                 </div>
-                                <button @click="copyCode()" class="text-indigo-400 hover:text-white text-xs font-bold">Copy Code</button>
+                            </div>
+                            <div x-show="generatedCode" class="mt-4 p-4 bg-indigo-50 border border-dashed border-indigo-200 rounded-xl flex justify-between items-center">
+                                <div><p class="font-mono text-lg font-bold text-indigo-900" x-text="generatedCode"></p></div>
+                                <button @click="copyCode()" class="text-xs font-bold text-indigo-600">Copy</button>
                             </div>
                         </section>
 
                         <section class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                            <h3 class="text-lg font-bold mb-6 flex items-center"><span class="mr-2">🔄</span> Instant Exchange</h3>
+                            <div class="flex items-center space-x-3 mb-6">
+                                <div class="p-2 bg-indigo-100 text-indigo-600 rounded-lg">🔄</div>
+                                <h3 class="text-xl font-bold">Process Exchange</h3>
+                            </div>
                             <div class="space-y-4">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Brand</label>
-                                        <select x-model="selectedCardId" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                                            <template x-for="card in cardRates">
-                                                <option :value="card.id" x-text="card.name"></option>
-                                            </template>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Value (USD)</label>
-                                        <input type="number" x-model="tradeAmount" class="w-full p-4 bg-slate-50 border rounded-xl outline-none" placeholder="0.00">
-                                    </div>
+                                    <select x-model="selectedCardId" class="p-4 bg-slate-50 border rounded-xl outline-none">
+                                        <template x-for="card in cardRates">
+                                            <option :value="card.id" x-text="card.name"></option>
+                                        </template>
+                                    </select>
+                                    <input type="number" x-model="tradeAmount" class="p-4 bg-slate-50 border rounded-xl outline-none" placeholder="Amount (USD)">
                                 </div>
-                                <div>
-                                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Card Code / Serial</label>
-                                    <input type="text" x-model="tradeCode" class="w-full p-4 bg-slate-50 border rounded-xl outline-none font-mono" placeholder="Paste code here">
-                                </div>
-                                <button @click="processTrade()" class="w-full py-5 bg-slate-900 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition shadow-xl">
-                                    Process Instant Trade
-                                </button>
+                                <input type="text" x-model="tradeCode" class="w-full p-4 bg-slate-50 border rounded-xl outline-none font-mono" placeholder="Paste generated code here">
+                                <button @click="startTrade()" :disabled="isProcessing" class="w-full py-4 rounded-2xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg">Confirm Trade</button>
                             </div>
                         </section>
                     </div>
 
                     <div class="lg:col-span-4 space-y-6">
-                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                            <h4 class="font-bold mb-4 flex justify-between items-center">
-                                Live Rates (₦/$) <span class="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                            </h4>
+                        <div class="bg-slate-900 text-white p-6 rounded-3xl">
+                            <h4 class="font-bold mb-4 flex justify-between">Live Market <span class="text-green-400">●</span></h4>
                             <div class="space-y-3">
                                 <template x-for="card in cardRates">
-                                    <div class="flex justify-between text-sm py-2 border-b border-slate-50 last:border-0">
-                                        <span class="text-slate-500 font-medium" x-text="card.name"></span>
-                                        <span class="font-bold text-green-600" x-text="'₦' + card.rate"></span>
+                                    <div class="flex justify-between text-sm border-b border-slate-800 pb-2">
+                                        <span class="text-slate-400" x-text="card.name"></span>
+                                        <span class="font-bold text-green-400" x-text="'₦' + card.rate"></span>
                                     </div>
                                 </template>
                             </div>
                         </div>
-
-                        <div class="h-64 bg-slate-100 rounded-3xl flex items-center justify-center border-2 border-dashed border-slate-200">
-                            <span class="text-xs text-slate-400 font-bold uppercase tracking-widest">Ad Widget</span>
+                        <div class="h-64 bg-white p-4 rounded-3xl border border-slate-100 flex items-center justify-center text-center">
+                            <p class="text-xs font-bold text-slate-300">ADVERTISEMENT SPACE</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div x-show="currentPage !== 'trade'" x-cloak class="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100 max-w-3xl">
-                <h2 class="text-4xl font-black mb-6 capitalize" x-text="currentPage"></h2>
-                <div class="prose text-slate-600 space-y-4">
-                    <p x-show="currentPage === 'about'">GiftTrade is Nigeria's most secure digital asset exchange. We provide instant liquidity for global gift cards using military-grade encryption and automated validation.</p>
-                    <p x-show="currentPage === 'terms'">All trades on GiftTrade are final. Attempting to use fraudulent or stolen cards will result in an immediate permanent ban and reporting to relevant financial authorities.</p>
-                    <p x-show="currentPage === 'privacy'">Your data is encrypted. We do not store your full bank account details on our public servers, and we never share your trading history with third parties.</p>
-                    <hr class="my-6">
-                    <p class="font-bold">Contact Support: waxlag94@instmall.uk</p>
+            <div x-show="currentPage === 'about'" x-cloak class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 max-w-3xl">
+                <h2 class="text-3xl font-black mb-6">About GiftTrade</h2>
+                <div class="space-y-4 text-slate-600 leading-relaxed">
+                    <p>GiftTrade is Nigeria's leading institutional-grade gift card exchange platform. Founded on the principles of speed, security, and transparency, we bridge the gap between digital assets and liquid cash.</p>
+                    <p>Our proprietary automated validation system ensures that your trades are processed in real-time, providing you with instant access to your funds via our seamless bank withdrawal system.</p>
+                </div>
+            </div>
+
+            <div x-show="currentPage === 'terms'" x-cloak class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 max-w-3xl">
+                <h2 class="text-3xl font-black mb-6">Terms of Service</h2>
+                <div class="space-y-4 text-slate-600 text-sm">
+                    <p><strong>1. Acceptance:</strong> By using GiftTrade, you agree to comply with our trading policies.</p>
+                    <p><strong>2. Trading:</strong> All gift cards submitted must be valid and legally obtained. Attempting to trade fraudulent codes will result in account suspension.</p>
+                    <p><strong>3. Payments:</strong> Payouts are based on the live market rate displayed at the time of trade confirmation.</p>
+                </div>
+            </div>
+
+            <div x-show="currentPage === 'privacy'" x-cloak class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 max-w-3xl">
+                <h2 class="text-3xl font-black mb-6">Privacy Policy</h2>
+                <div class="space-y-4 text-slate-600 text-sm">
+                    <p>We value your privacy. GiftTrade does not share your bank details or transaction history with third-party advertisers. All data is encrypted using 256-bit SSL technology.</p>
+                    <p>We collect minimal information required to process your withdrawals and ensure the security of your wallet.</p>
                 </div>
             </div>
 
         </main>
     </div>
 
-    <div x-show="showWithdraw" x-cloak class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl transition-all" @click.away="showWithdraw = false">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-black text-slate-900">Withdrawal</h3>
-                <button @click="showWithdraw = false" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">✕</button>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block tracking-widest">Select Destination Bank</label>
-                    <select class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-indigo-500">
-                        <template x-for="bank in banks">
-                            <option x-text="bank"></option>
-                        </template>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block tracking-widest">Account Number</label>
-                    <input type="text" maxlength="10" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none font-mono" placeholder="0123456789">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block tracking-widest">Amount (Naira)</label>
-                    <input type="number" x-model="withdrawAmount" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none" :placeholder="'Max: ' + balance">
-                    <p class="text-[10px] text-slate-400 mt-1">* Minimum withdrawal: ₦1,000</p>
-                </div>
-
-                <button @click="confirmWithdrawal()" class="w-full py-5 bg-green-600 text-white rounded-2xl font-bold text-lg hover:bg-green-700 transition shadow-xl shadow-green-100">
-                    Confirm Cashout
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div x-show="isProcessing" x-cloak class="fixed inset-0 bg-white/95 backdrop-blur-md z-[200] flex items-center justify-center text-center p-6">
-        <div class="max-w-xs">
-            <div class="w-24 h-24 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-8"></div>
-            <h3 class="text-3xl font-black text-slate-900 mb-2" x-text="statusTitle"></h3>
-            <p class="text-slate-500 text-lg leading-tight" x-text="statusMsg"></p>
+    <div x-show="isProcessing" x-cloak class="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-[110]">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <h3 class="text-xl font-bold text-slate-900" x-text="statusTitle"></h3>
+            <p class="text-slate-500 mt-2" x-text="statusMsg"></p>
         </div>
     </div>
 
@@ -226,95 +191,56 @@
             return {
                 currentPage: 'trade',
                 mobileMenu: false,
-                showWithdraw: false,
-                isProcessing: false,
-                balance: 15200, // Initial Demo Balance
-                tradeCount: 12,
+                balance: 24500,
+                tradeCount: 14,
                 selectedCardId: 'itunes',
                 tradeAmount: 0,
                 tradeCode: '',
+                genType: 'itunes',
                 generatedCode: '',
-                withdrawAmount: 0,
+                isProcessing: false,
                 statusTitle: '',
                 statusMsg: '',
-
+                
                 cardRates: [
                     { id: 'itunes', name: 'Apple / iTunes', rate: 1450 },
                     { id: 'amazon', name: 'Amazon USA', rate: 1380 },
                     { id: 'steam', name: 'Steam Wallet', rate: 1520 },
                     { id: 'google', name: 'Google Play', rate: 1400 },
-                    { id: 'vanilla', name: 'Vanilla Visa', rate: 1320 },
-                    { id: 'amex', name: 'American Express', rate: 1410 },
-                    { id: 'ebay', name: 'eBay Card', rate: 1250 },
-                    { id: 'nordstrom', name: 'Nordstrom', rate: 1500 }
+                    { id: 'sephora', name: 'Sephora', rate: 1550 }
                 ],
 
-                banks: ['Zenith Bank', 'Kuda MFB', 'GTBank', 'First Bank', 'Access Bank', 'Moniepoint', 'Opay', 'Palmpay', 'United Bank for Africa (UBA)'],
-
-                generateNewCode() {
+                generateCode() {
                     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                    let s1 = '', s2 = '', s3 = '';
-                    for (let i = 0; i < 4; i++) {
-                        s1 += chars.charAt(Math.floor(Math.random() * chars.length));
-                        s2 += chars.charAt(Math.floor(Math.random() * chars.length));
-                        s3 += chars.charAt(Math.floor(Math.random() * chars.length));
+                    let result = '';
+                    for (let i = 0; i < 16; i++) {
+                        if (i > 0 && i % 4 === 0) result += '-';
+                        result += chars.charAt(Math.floor(Math.random() * chars.length));
                     }
-                    this.generatedCode = `${this.selectedCardId.toUpperCase()}-${s1}-${s2}-${s3}`;
-                    this.tradeCode = this.generatedCode; // Auto-fill for convenience
+                    this.generatedCode = `${this.genType.toUpperCase()}-${result}`;
                 },
 
                 copyCode() {
                     navigator.clipboard.writeText(this.generatedCode);
-                    alert("Code Copied!");
                 },
 
-                processTrade() {
-                    if(!this.tradeCode || this.tradeAmount <= 0) return alert("Enter valid trade amount and card code");
-                    
-                    this.statusTitle = "Validating Asset...";
-                    this.statusMsg = "Connecting to global card networks for verification...";
+                startTrade() {
+                    if (!this.tradeCode || this.tradeAmount <= 0) return;
+                    this.statusTitle = "Validating...";
+                    this.statusMsg = "Connecting to brand secure servers...";
                     this.isProcessing = true;
-                    
                     setTimeout(() => {
                         const rate = this.cardRates.find(c => c.id === this.selectedCardId).rate;
-                        const payout = this.tradeAmount * rate;
-                        this.balance += payout;
+                        this.balance += (this.tradeAmount * rate);
                         this.tradeCount++;
-                        this.statusTitle = "Trade Successful!";
-                        this.statusMsg = `₦${payout.toLocaleString()} has been credited to your wallet instantly.`;
-                        
-                        setTimeout(() => { 
-                            this.isProcessing = false; 
-                            this.tradeCode = ''; 
-                            this.tradeAmount = 0;
-                            this.generatedCode = '';
-                        }, 2500);
-                    }, 3000);
-                },
-
-                confirmWithdrawal() {
-                    if(this.withdrawAmount < 1000 || this.withdrawAmount > this.balance) {
-                        return alert("Invalid amount. Check your balance or minimum limit (₦1,000).");
-                    }
-
-                    this.showWithdraw = false;
-                    this.statusTitle = "Processing Payout...";
-                    this.statusMsg = "Initiating bank transfer to your local account...";
-                    this.isProcessing = true;
-
-                    setTimeout(() => {
-                        this.balance -= this.withdrawAmount;
-                        this.statusTitle = "Transfer Complete!";
-                        this.statusMsg = `The sum of ₦${this.withdrawAmount.toLocaleString()} is on its way to your bank.`;
-                        
-                        setTimeout(() => { 
-                            this.isProcessing = false; 
-                            this.withdrawAmount = 0; 
-                        },  2500);
-                    }, 4000);
+                        this.statusTitle = "Success!";
+                        this.statusMsg = "Funds added to dashboard.";
+                        setTimeout(() => { this.isProcessing = false; this.tradeCode = ''; }, 2000);
+                    }, 2500);
                 }
             }
-                </script>
+        }
+    </script>
 </body>
-</html>
-                                
+                    </html>
+                    
