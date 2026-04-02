@@ -1,205 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <<meta name="google-site-verification" content="WEly__7PSiISpgicYVvNX4qrhhWUXE-4IixRLyTuhBk" />meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GiftTrade | Premium Gift Card Exchange</title>
     
-    <meta name="description" content="Exchange gift cards for instant Naira. Secure, fast, and reliable.">
-    <meta name="google-site-verification" content="YOUR_CODE_HERE" />
+    <title>GiftMax | Trade Gift Cards & Earn Rewards</title>
+    <meta name="description" content="The world's leading gift card simulation platform. Trade cards, refer friends, and track your virtual earnings.">
+    <meta name="keywords" content="gift card trade, referral rewards, virtual wallet, gift card codes">
+    <meta name="author" content="GiftMax Global">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <meta name="google-site-verification" content="INSERT_YOUR_CODE_HERE" />
+
     <style>
-        [x-cloak] { display: none !important; }
-        .nav-link { @apply flex items-center space-x-3 p-3 rounded-xl transition-all font-bold; }
-        .nav-active { @apply bg-indigo-600 text-white shadow-lg; }
-        .nav-inactive { @apply text-slate-500 hover:bg-slate-100; }
+        :root {
+            --primary: #2ecc71;
+            --secondary: #27ae60;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gold: #f1c40f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f7f6;
+            color: var(--dark);
+        }
+
+        /* Live Activity Ticker */
+        .ticker-wrap {
+            width: 100%;
+            background: var(--dark);
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        header {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .card-stat {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .card-stat h3 { margin: 0; color: #7f8c8d; font-size: 0.9rem; }
+        .card-stat p { font-size: 1.8rem; font-weight: bold; margin: 10px 0; color: var(--primary); }
+
+        /* Gift Selection */
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        .gift-item {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 30px 10px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gift-item:hover { transform: translateY(-5px); }
+        .gift-item.amazon { background: #ff9900; }
+        .gift-item.apple { background: #555555; }
+        .gift-item.google { background: #4285F4; }
+        .gift-item.steam { background: #171a21; }
+
+        /* Modal / Trading Area */
+        .trade-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            display: none;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover { background: var(--secondary); }
+
+        .ref-link {
+            background: #e8f5e9;
+            padding: 10px;
+            border: 1px dashed var(--primary);
+            word-break: break-all;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 30px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #95a5a6;
+        }
+        footer a { color: #95a5a6; margin: 0 10px; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900" x-data="tradeApp()">
+<body>
 
-    <nav class="lg:hidden bg-white border-b px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 class="text-xl font-black text-indigo-900">GIFT<span class="text-indigo-600">TRADE</span></h1>
-        <button @click="mobileMenu = !mobileMenu" class="p-2 text-slate-600 text-2xl">☰</button>
-    </nav>
-
-    <div class="flex min-h-screen">
-        <aside :class="mobileMenu ? 'translate-x-0' : '-translate-x-full'" class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r z-[60] transition-transform duration-300 lg:translate-x-0">
-            <div class="p-8">
-                <h1 class="text-2xl font-black text-indigo-900 mb-10 hidden lg:block">GIFT<span class="text-indigo-600">TRADE</span></h1>
-                <nav class="space-y-2">
-                    <button @click="currentPage = 'trade'; mobileMenu = false" :class="currentPage === 'trade' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full"><span>🏠</span> <span>Dashboard</span></button>
-                    <button @click="currentPage = 'about'; mobileMenu = false" :class="currentPage === 'about' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full"><span>📖</span> <span>About</span></button>
-                    <button @click="currentPage = 'legal'; mobileMenu = false" :class="currentPage === 'legal' ? 'nav-active' : 'nav-inactive'" class="nav-link w-full"><span>⚖️</span> <span>Legal</span></button>
-                </nav>
-                <div class="mt-20 p-4 bg-slate-900 rounded-2xl text-white text-xs">
-                    <p class="text-slate-400 uppercase font-bold mb-1">Support</p>
-                    <p class="truncate">waxlag94@instmall.uk</p>
-                </div>
-            </div>
-        </aside>
-
-        <main class="flex-1 p-4 md:p-10 max-w-6xl mx-auto">
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-indigo-600 p-6 rounded-3xl text-white shadow-xl flex flex-col justify-between">
-                    <div>
-                        <p class="text-indigo-100 text-sm font-medium">Available Balance</p>
-                        <h3 class="text-3xl font-black mt-1" x-text="'₦' + balance.toLocaleString()"></h3>
-                    </div>
-                    <button @click="showWithdraw = true" class="mt-4 bg-white/20 hover:bg-white/30 py-2 rounded-xl font-bold text-sm transition">Withdraw Funds</button>
-                </div>
-                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                    <p class="text-slate-400 text-sm font-medium">Total Trades</p>
-                    <h3 class="text-3xl font-black text-slate-800 mt-1" x-text="tradeCount"></h3>
-                </div>
-                <div class="bg-slate-100 rounded-3xl border-2 border-dashed border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                    Ad Space (728x90)
-                </div>
-            </div>
-
-            <div x-show="currentPage === 'trade'">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-8 space-y-6">
-                        <section class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                            <h3 class="text-lg font-bold mb-4 flex items-center"><span class="mr-2">🔄</span> Trade Asset</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <select x-model="selectedCardId" class="p-4 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-indigo-500">
-                                    <template x-for="card in cardRates">
-                                        <option :value="card.id" x-text="card.name"></option>
-                                    </template>
-                                </select>
-                                <input type="number" x-model="tradeAmount" class="p-4 bg-slate-50 border rounded-xl outline-none" placeholder="Amount ($)">
-                            </div>
-                            <input type="text" x-model="tradeCode" class="w-full p-4 bg-slate-50 border rounded-xl outline-none mb-4 font-mono" placeholder="Enter Gift Card Code">
-                            <button @click="processTrade()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition">Process Instant Exchange</button>
-                        </section>
-                    </div>
-
-                    <div class="lg:col-span-4">
-                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                            <h4 class="font-bold mb-4">Live Rates (₦/$)</h4>
-                            <div class="space-y-3">
-                                <template x-for="card in cardRates">
-                                    <div class="flex justify-between text-sm py-2 border-b border-slate-50">
-                                        <span class="text-slate-500" x-text="card.name"></span>
-                                        <span class="font-bold text-green-600" x-text="'₦' + card.rate"></span>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div x-show="currentPage !== 'trade'" class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                <h2 class="text-2xl font-black mb-4" x-text="currentPage.toUpperCase()"></h2>
-                <p class="text-slate-500">Content for this section is managed by administration. Please contact waxlag94@instmall.uk for details.</p>
-            </div>
-
-        </main>
+<div class="ticker-wrap">
+    <div class="ticker" id="live-activity">
+        User @LuckyRef just withdrew $120.00 via Bank Transfer... User @GiftKing generated a $50 Apple Card... User @SimMaster referred 2 new people...
     </div>
+</div>
 
-    <div x-show="showWithdraw" x-cloak class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl" @click.away="showWithdraw = false">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-black">Withdraw</h3>
-                <button @click="showWithdraw = false" class="text-slate-400 text-2xl">✕</button>
-            </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Select Bank</label>
-                    <select class="w-full p-4 bg-slate-50 border rounded-2xl outline-none">
-                        <template x-for="bank in banks">
-                            <option x-text="bank"></option>
-                        </template>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Account Number</label>
-                    <input type="text" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none" placeholder="0123456789">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase mb-1 block">Amount (Min ₦1,000)</label>
-                    <input type="number" x-model="withdrawAmount" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none" :placeholder="'Max: ₦' + balance">
-                </div>
-                <button @click="confirmWithdrawal()" class="w-full py-4 bg-green-600 text-white rounded-2xl font-bold hover:bg-green-700 transition shadow-lg shadow-green-100">Confirm Withdrawal</button>
-            </div>
+<header>
+    <h1>GiftMax Simulator</h1>
+    <p>Get codes, trade them, and watch your virtual balance grow!</p>
+</header>
+
+<div class="container">
+    <div class="dashboard">
+        <div class="card-stat">
+            <h3>Total Balance</h3>
+            <p>$<span id="balance">0.00</span></p>
+        </div>
+        <div class="card-stat">
+            <h3>Referrals</h3>
+            <p><span id="ref-count">0</span> / 10</p>
+        </div>
+        <div class="card-stat">
+            <h3>Account Status</h3>
+            <p id="status" style="font-size: 1rem; color: #e67e22;">Active</p>
         </div>
     </div>
 
-    <div x-show="isProcessing" x-cloak class="fixed inset-0 bg-white/95 z-[200] flex items-center justify-center text-center">
-        <div>
-            <div class="w-20 h-20 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-            <h3 class="text-3xl font-black text-slate-900" x-text="statusTitle"></h3>
-            <p class="text-slate-500 mt-2 text-lg" x-text="statusMsg"></p>
-        </div>
+    <h3>Step 1: Select a Gift Card to Generate Code</h3>
+    <div class="gift-grid">
+        <div class="gift-item amazon" onclick="generate('Amazon', 25)">Amazon $25</div>
+        <div class="gift-item apple" onclick="generate('Apple', 50)">Apple $50</div>
+        <div class="gift-item google" onclick="generate('Google', 100)">Google Play $100</div>
+        <div class="gift-item steam" onclick="generate('Steam', 20)">Steam $20</div>
     </div>
 
-    <script>
-        function tradeApp() {
-            return {
-                currentPage: 'trade',
-                mobileMenu: false,
-                showWithdraw: false,
-                isProcessing: false,
-                balance: 50000,
-                tradeCount: 21,
-                selectedCardId: 'itunes',
-                tradeAmount: 0,
-                tradeCode: '',
-                withdrawAmount: 0,
-                statusTitle: '',
-                statusMsg: '',
+    <div id="trade-ui" class="trade-section">
+        <h3>Step 2: Copy & Trade Code</h3>
+        <p>Your Code: <strong id="generated-code">---</strong></p>
+        <button onclick="copyCode()">Copy Code</button>
+        <hr>
+        <p>Paste code below to trade into your dashboard balance:</p>
+        <input type="text" id="paste-code" placeholder="Paste code here...">
+        <button onclick="simulateTrade()" style="background: var(--dark);">Verify & Trade Card</button>
+    </div>
 
-                cardRates: [
-                    { id: 'itunes', name: 'Apple / iTunes', rate: 1450 },
-                    { id: 'amazon', name: 'Amazon USA', rate: 1380 },
-                    { id: 'steam', name: 'Steam Wallet', rate: 1520 },
-                    { id: 'google', name: 'Google Play', rate: 1400 },
-                    { id: 'vanilla', name: 'Vanilla Visa', rate: 1320 },
-                    { id: 'amex', name: 'American Express', rate: 1410 },
-                    { id: 'ebay', name: 'eBay Card', rate: 1250 },
-                    { id: 'nordstrom', name: 'Nordstrom', rate: 1500 }
-                ],
+    <div class="trade-section" style="display: block; background: #fff;">
+        <h3>Step 3: Withdraw Earnings</h3>
+        <input type="text" placeholder="Account Name">
+        <input type="text" placeholder="Account Number">
+        <input type="text" placeholder="Bank Name">
+        <button onclick="tryWithdraw()">Withdraw Funds</button>
+        <div id="referral-area" style="display:none; margin-top: 15px;">
+            <p style="color: red; font-size: 0.9rem;">⚠️ Unlock Requirement: You must refer 10 people before withdrawal. (5 more needed for verification phase).</p>
+            <p>Your Referral Link:</p>
+            <div class="ref-link" id="my-link">https://giftmax.github.io/join?ref=user772</div>
+        </div>
+    </div>
+</div>
 
-                banks: ['Zenith Bank', 'Kuda MFB', 'GTBank', 'First Bank', 'Access Bank', 'Moniepoint', 'Opay', 'Palmpay'],
+<footer>
+    <p>&copy; 2026 GiftMax Simulator. This is a simulation for educational purposes.</p>
+    <a href="#">About</a> | <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a>
+</footer>
 
-                processTrade() {
-                    if(!this.tradeCode || this.tradeAmount <= 0) return alert("Enter details!");
-                    this.statusTitle = "Verifying Asset...";
-                    this.statusMsg = "Connecting to card issuer servers...";
-                    this.isProcessing = true;
-                    
-                    setTimeout(() => {
-                        const rate = this.cardRates.find(c => c.id === this.selectedCardId).rate;
-                        const payout = this.tradeAmount * rate;
-                        this.balance += payout;
-                        this.tradeCount++;
-                        this.statusTitle = "Trade Successful!";
-                        this.statusMsg = `₦${payout.toLocaleString()} added to your balance.`;
-                        setTimeout(() => { this.isProcessing = false; this.tradeCode = ''; this.tradeAmount = 0; }, 2000);
-                    }, 2500);
-                },
+<script>
+    // App State
+    let balance = 0;
+    let referrals = 0;
+    let currentCode = "";
+    let pendingValue = 0;
 
-                confirmWithdrawal() {
-                    if(this.withdrawAmount < 1000 || this.withdrawAmount > this.balance) return alert("Invalid amount!");
-                    this.showWithdraw = false;
-                    this.statusTitle = "Processing Payout...";
-                    this.statusMsg = "Transferring funds to your bank account...";
-                    this.isProcessing = true;
+    // Live Activity Randomizer
+    const activities = [
+        "User @Dev_Mike just earned $100",
+        "Referral link shared by @Sarah99",
+        "New $50 Steam card generated",
+        "Withdrawal pending for @CryptoKing",
+        "System update: Faster verification enabled"
+    ];
+    setInterval(() => {
+        const rand = activities[Math.floor(Math.random() * activities.length)];
+        document.getElementById('live-activity').innerText += " | " + rand;
+    }, 5000);
 
-                    setTimeout(() => {
-                        this.balance -= this.withdrawAmount;
-                        this.statusTitle = "Transfer Complete!";
-                        this.statusMsg = "Funds will reflect in your bank shortly.";
-                        setTimeout(() => { this.isProcessing = false; this.withdrawAmount = 0; }, 2000);
-                    }, 3000);
-                }
-            }
+    // Logic Functions
+    function generate(type, val) {
+        currentCode = Math.random().toString(36).substring(2, 10).toUpperCase() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase();
+        pendingValue = val;
+        document.getElementById('generated-code').innerText = currentCode;
+        document.getElementById('trade-ui').style.display = 'block';
+        alert(type + " card generated!");
+    }
+
+    function copyCode() {
+        navigator.clipboard.writeText(currentCode);
+        alert("Code copied to clipboard!");
+    }
+
+    function simulateTrade() {
+        const input = document.getElementById('paste-code').value;
+        if(input === currentCode && currentCode !== "") {
+            alert("Verification successful! Adding $" + pendingValue + " to dashboard.");
+            balance += pendingValue;
+            document.getElementById('balance').innerText = balance.toFixed(2);
+            document.getElementById('trade-ui').style.display = 'none';
+            document.getElementById('paste-code').value = "";
+            currentCode = "";
+        } else {
+            alert("Invalid code or already used.");
         }
-    </script>
+    }
+
+    function tryWithdraw() {
+        if (balance <= 0) {
+            alert("You have no virtual balance to withdraw.");
+            return;
+        }
+        
+        // Show referral requirement
+        document.getElementById('referral-area').style.display = 'block';
+        
+        if (referrals < 10) {
+            alert("Error: Referral limit not met. You have " + referrals + "/10 referrals.");
+            // Simulate a referral being added for the user to see progress
+            referrals += 1; 
+            document.getElementById('ref-count').innerText = referrals;
+        } else {
+            alert("Withdrawal request sent! It will be processed once manual verification is complete.");
+        }
+    }
+
+    // Set dynamic referral link based on URL
+    document.getElementById('my-link').innerText = window.location.href + "?id=" + Math.floor(Math.random() * 10000);
+</script>
+
 </body>
-</html>
+    </html>
+    
